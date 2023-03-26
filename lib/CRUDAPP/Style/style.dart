@@ -34,9 +34,67 @@ BackgrounImage(context){
   return SvgPicture.asset(
     'assets/images/screen-back.svg',
     alignment: Alignment.center,
-    width: MediaQuery.of(context).size.width,
-    height: MediaQuery.of(context).size.height,
-    fit: BoxFit.cover,
+    width: MediaQuery.of(context).size.width,//width sob screen  a full hobe
+    height: MediaQuery.of(context).size.height,//height sob screen a full hobe
+    fit: BoxFit.cover,//ata use korle sob screen er sathe fit hobe
   );
 
 }
+
+DecoratedBox AppDropdownStyle(child){
+  return DecoratedBox(
+      decoration:BoxDecoration(
+        color: WhiteColor,
+        border: Border.all(color: WhiteColor,width: 1),
+        borderRadius: BorderRadius.all(Radius.circular(5))
+        
+      ),//box decoration
+    child: Padding(
+      padding: EdgeInsets.only(left: 30,right: 30),
+      child: child,
+    ),//padding
+
+
+  );//decorationbox
+
+}
+
+//submit button style
+
+ButtonStyle SubmitButtonStyle(){
+  return ElevatedButton.styleFrom(
+
+    padding: EdgeInsets.all(0),
+    backgroundColor: Colors.blue,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)
+
+    )
+
+  );
+}
+
+
+//button er vitor er text style
+Ink ButtonTextStyle(ButtonText){//ink style er jonno use hoi
+  return Ink(
+    decoration: BoxDecoration(
+      color: GreenColor,
+      borderRadius: BorderRadius.circular(6),
+
+    ),
+    child: Container(
+      height: 45,
+      alignment: Alignment.center,
+      child:Text(ButtonText,
+       style: TextStyle(
+         fontSize: 20,
+         fontWeight: FontWeight.w400,
+       ),
+      ) ,
+    ),
+
+  );
+}
+
+
+
