@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 
-InputDecoration InputStyle(label){
-  return InputDecoration(
-    contentPadding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-    fillColor: Colors.greenAccent,
-    filled: true,
-    border: OutlineInputBorder(),
-    labelText: label,
+void main(){
+  runApp(MyApp());
+}
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  );
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: RestApiApp(),
+    );
+  }
+}
+class RestApiApp extends StatefulWidget {
+  const RestApiApp({Key? key}) : super(key: key);
 
+  @override
+  State<RestApiApp> createState() => _RestApiAppState();
 }
 
-ButtonStyle submitButtonStyle(){
-  return ElevatedButton.styleFrom(
-    padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-    minimumSize: Size(double.infinity,60),
-    backgroundColor: Colors.blueAccent,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10))
-    )
-
-
-  );
+class _RestApiAppState extends State<RestApiApp> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
 }
