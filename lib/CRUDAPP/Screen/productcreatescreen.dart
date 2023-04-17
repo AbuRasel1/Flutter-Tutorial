@@ -1,18 +1,19 @@
 import 'package:app1/CRUDAPP/Style/style.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../ResetApi/RestClient.dart';
 
-class CrudApp extends StatefulWidget {
-  const CrudApp({Key? key}) : super(key: key);
+class productCreateScreen extends StatefulWidget {
+  const productCreateScreen({Key? key}) : super(key: key);
 
   @override
-  State<CrudApp> createState() => HomePageUI();
+  State<productCreateScreen> createState() => _productCreateScreenState();
 }
 
-class HomePageUI extends State<CrudApp>{
+class _productCreateScreenState extends State<productCreateScreen> {
 
-  Map<String,dynamic> InputFromValue ={
+  //map er vitor value set korar map
+  Map<String,dynamic>formValues={
 
       "Img":"",
       "ProductCode":"",
@@ -23,91 +24,165 @@ class HomePageUI extends State<CrudApp>{
 
 
   };
-
-  InputOnChange(Mapkey,TextValue){
+  bool loading=false;
+//value newar function
+  inputValueChange(mapKey,textValue){
     setState(() {
-      InputFromValue.update(Mapkey, (value) => TextValue);
-
+      formValues.update(mapKey, (value) => textValue);
     });
+
+
   }
+  //value submit submit button click korar por
+  formOnSubmit()async{
+    if(formValues['Img']!.length==0){
+      errorToast("Image Link Required");
+
+    }
+    else if(formValues['ProductCode']!.length==0){
+      errorToast("Product Code Required");
+
+    }
+    else if(formValues['ProductName']!.length==0){
+      errorToast("Product Name Required");
+
+    }
+    else if(formValues['Qty']!.length==0){
+      errorToast("Quentity Required");
+
+    }
+    else if(formValues['TotalPrice']!.length==0){
+      errorToast("Total Price  Required");
+
+    }
+    else if(formValues['UnitPrice']!.length==0){
+      errorToast("Uint Price Required");
+
+    }
+    else{
+      setState(() {
+        loading=true;
+      });
+      await productCreateRequest(formValues);
+      setState(() {
+        loading=false;
+      });
+
+    }
+
+  }
+
+
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("This is a Croud App"),//appbar title
+        title: Text("Create Product"),
+        centerTitle: true,
+        toolbarHeight: 60,
+
       ),
-      body: Stack(
-        //background image
+      body:Stack(
         children: [
-          BackgrounImage(context),//background image
+          screenBackground(context),//Screen background image use kora hoice akhane
+          Container(
+            //loading?():() ata inline if else (jodi true hoi tahole first ta kaj korbe ar false hole second ta
+            /*
+              loading a jokhon rest api a data jabe tokhon circle er moto gol ghurbe
+              ar data patano sesh hole abar form dekhabe
+             */
+              child:loading?(Center(child: CircularProgressIndicator(),)):( SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  padding: EdgeInsets.all(30),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20,),//for padding
+                      //Text form feild
+                      TextFormField(
+                        onChanged: (value){
+                          inputValueChange('ProductName',value);
 
-          Container(//container
-            padding: EdgeInsets.all(20),//container er all padding hobe 20
-            child: Column(
+                        },
+                        decoration: inputFeildDecoration("Enter Product Name"),
+                      ),
+                      SizedBox(height: 20,),
+                      TextFormField(
+                        onChanged: (value){
+                          inputValueChange('ProductCode',value);
 
-              children: [//children niyeci column er vitor
-                SizedBox(height: 20,),
-                TextFormField(onChanged: (TextValue){InputOnChange("ProductName",TextValue); },decoration: AppInputDecoration("Product Name"),),
-
-                SizedBox(height: 20,),
-
-                TextFormField(onChanged: (TextValue){InputOnChange("ProductCode",TextValue); },decoration: AppInputDecoration("Product Code"),),
-
-                SizedBox(height: 20,),
-
-                TextFormField(onChanged: (TextValue){InputOnChange("Img",TextValue);},decoration: AppInputDecoration("Product Image Url"),),
-
-                SizedBox(height: 20,),
-
-                TextFormField(onChanged: (TextValue){InputOnChange("UnitPrice",TextValue);},decoration: AppInputDecoration("Unit Price"),),
-
-                SizedBox(height: 20,),
-
-                TextFormField(onChanged: (TextValue){InputOnChange("TotalPrice",TextValue);},decoration: AppInputDecoration("Total Price"),),
-
-                SizedBox(height: 20,),
-
-                AppDropdownStyle(
-                    DropdownButton(//drop down button droupdown menue er moto kaj kore
-                      value: "",//value jeta faka oita auto select hoye thakbe
+                        },
+                        decoration: inputFeildDecoration("Enter Product Code"),),
+                      SizedBox(height: 20,),
 
 
-                        items://drop down er vitor ki ki item thakbe
+                      TextFormField(
+                        onChanged: (value){
+                          inputValueChange('Img', value);
 
-                        [
+                        },
+                        decoration: inputFeildDecoration("Enter Product Image Url"),),
+                      SizedBox(height: 20,),
 
-                          DropdownMenuItem(child: Text("Select QT"),value:('')),
-                          DropdownMenuItem(child: Text("1 pcs"),value:('1 pcs')),
-                          DropdownMenuItem(child: Text("2 pcs"),value:('2 pcs')),
-                          DropdownMenuItem(child: Text("3 pcs"),value:('3 pcs')),
-                          DropdownMenuItem(child: Text("4 pcs"),value:('4 pcs')),
-                        ],//items
+                      TextFormField(
+                        onChanged: (value){
+                          inputValueChange('UnitPrice',value);
 
+                        },
+                        decoration: inputFeildDecoration("Enter Product Unit Price"),),
+                      SizedBox(height: 20,),
 
-                        onChanged: (TextValue){InputOnChange("Qty",TextValue);},
+                      TextFormField(
+                        onChanged: (value){
+                          inputValueChange('TotalPrice', value);
 
-                      underline: Container(),//underline sob dike hobe
-                      isExpanded: true,//width full screen nibe
+                        },
+                        decoration: inputFeildDecoration("Enter Product Total Price"),),
+                      SizedBox(height: 20,),
 
-                    )//dropdown button
+                      dropDownStyle(//drop down style function call er child er mooddhe disi jno sob style gula kaj kore tai
+                        //Drop down button
+                        DropdownButton(
+                          value:formValues['Qty'],
+                          items:[
+                            DropdownMenuItem(child: Text("Select Qty"),value: '',),
+                            DropdownMenuItem(child: Text("1 Pcs"),value: '1 pcs',),
+                            DropdownMenuItem(child: Text("2 pcs"),value: '2 pcs',),
+                            DropdownMenuItem(child: Text("3 pcs"),value: '3 pcs',),
+                            DropdownMenuItem(child: Text("4 pcs"),value: '4 pcs',),
+                          ] ,
+                          onChanged: (value){
+                            inputValueChange('Qty',value);
+                          },
+                          underline: Container(),
+                          isExpanded: true,
 
+                        ),
+                      ),
 
-                ),//app drop down style function
+                      SizedBox(height: 20,),
+                      Container(//container use koreci jeno left theke right porjont full screen jaiga nibe
+                          child:  ElevatedButton(
+                              style: submitButtonStyle(),
 
-                SizedBox(height: 20,),
+                              onPressed: (){
+                                formOnSubmit();
+                              },
+                              child:successButtonStyle("Submit")
+                          )
+                      )
 
-                ElevatedButton(onPressed: (){}, child:ButtonTextStyle("Submit"),style: SubmitButtonStyle(),)
-                
+                    ],
 
+                  ),
+                )
+            )
 
-              ],
-            ),
-          ),
+          )
         ],
-      ),
+      )
+
     );
   }
 }
-

@@ -41,6 +41,8 @@ dependencies:
   responsive_grid: ^2.1.0
   flutter_bootstrap: ^2.0.0
   flutter_svg: ^1.1.6
+  fluttertoast: ^8.2.1
+
 
 dev_dependencies:
   flutter_test:

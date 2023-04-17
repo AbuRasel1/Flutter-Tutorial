@@ -1,23 +1,17 @@
-//main page where code run
-
-
-import 'package:flutter/cupertino.dart';
+import 'package:app1/CRUDAPP/Screen/productcreatescreen.dart';
 import 'package:flutter/material.dart';
 
-import 'Screen/productcreatescreen.dart';
-
 void main(){
-  runApp(MyApp());
+  runApp(crudApp());
 }
 
-class MyApp extends StatelessWidget {
+class crudApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Croud App",
-      home: CrudApp(),
-      debugShowCheckedModeBanner: false,
-
+      home: productCreateScreen(),
+      title: "Crud App",
     );
   }
+
 }

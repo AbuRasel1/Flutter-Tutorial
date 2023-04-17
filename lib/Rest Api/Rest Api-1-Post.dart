@@ -37,13 +37,13 @@ class RestApiPost extends StatefulWidget {
 class _RestApiPostState extends State<RestApiPost> {
 
 
-  PojoClass?productListGet;
+  RestApiPojoClass_1?productListGet;
 //Api theke data get korar function
   Future<void> RestApiCallGet()async{
     Uri url=Uri.parse("https://crud.teamrabbil.com/api/v1/ReadProduct");
     http.Response response_get_api=await http.get(url);
     if(response_get_api.statusCode==200){
-      productListGet=PojoClass.fromJson (jsonDecode(response_get_api.body));
+      productListGet=RestApiPojoClass_1.fromJson (jsonDecode(response_get_api.body));
       setState(() {
 
       });
@@ -96,16 +96,16 @@ class _RestApiPostState extends State<RestApiPost> {
 //Pojo class
 class RestApiPojoClass_1 {
   String? status;
-  List<Product>? ListOfProducts;
+  List<Product>? data;
 
-  RestApiPojoClass_1({this.status, this.ListOfProducts});
+  RestApiPojoClass_1({this.status, this.data});
 
   RestApiPojoClass_1.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      ListOfProducts = <Product>[];
+      data = <Product>[];
       json['data'].forEach((v) {
-        ListOfProducts!.add(new Product.fromJson(v));
+        data!.add(new Product.fromJson(v));
       });
     }
   }
@@ -163,21 +163,8 @@ class _addNewItemState extends State<addNewItem> {
   GlobalKey<FormState> _form=GlobalKey();
 
   //Alert Dialog
-  MyAlertDialog(context,msg){
-    return showDialog(context: context,
-        builder: (BuildContext context){
-            return Expanded(
-              child: AlertDialog(
-                title: Text('Alert'),
-                content: Text(msg),
-                actions: [
-                  TextButton(onPressed: (){Navigator.of(context).pop();}, child: Text("Ok"))
-                ],
-              ),
-
-
-            );
-        });
+  mySnackBar(msg){
+    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
 
@@ -207,7 +194,7 @@ class _addNewItemState extends State<addNewItem> {
      );
      if(response.statusCode==200){
        //data add successfull hole ay message show korbe
-       MyAlertDialog(context,"Product Add Successfull");
+       mySnackBar("Data Add Successfull");
        //Data add howar por sob input feild gula clear hoye jabe
        productTotalPriceControl.text='';
        productImageControl.text='';
@@ -221,7 +208,7 @@ class _addNewItemState extends State<addNewItem> {
      }
      else{
        //data add successfull hole ay message show korbe
-       MyAlertDialog(context,"Sorry Product Add Not Successfull");
+       mySnackBar("Data Add not Successfull");
        //Data add na  howar por o sob input feild gula clear hoye jabe
        productTotalPriceControl.text='';
        productImageControl.text='';

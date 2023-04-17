@@ -1,100 +1,121 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-const RedColor=Color.fromRGBO(236, 28, 36, 1);
-const GreenColor=Color.fromRGBO(0, 128, 0, 1);
-const WhiteColor=Color.fromRGBO(253, 252, 252, 1);
-const BlackColor=Color.fromRGBO(44, 62, 80, 1);
+//Start product create screen style
 
-
-//input feild gula decoration korar function
-InputDecoration AppInputDecoration(label){
+InputDecoration inputFeildDecoration(label){
   return InputDecoration(
-    focusedBorder: const OutlineInputBorder(
-      borderSide: const BorderSide(color: GreenColor,width: 2),
-    ),
-    enabledBorder: const OutlineInputBorder(
-      borderSide: const BorderSide(color: WhiteColor,width: 2),
-    ),
-    border: OutlineInputBorder(),
-    fillColor: WhiteColor,
-    filled: true,
+      focusedBorder: OutlineInputBorder(//input feild er moddhe click korle border er color red hobe
+          borderSide: BorderSide(color: Colors.redAccent,width: 2),
+      ),
+
+      border: OutlineInputBorder(),//sob
+    fillColor: Colors.greenAccent,
+    contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 20),
     labelText: label,
-    contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10)
-
-
-
+    filled: true,
+    labelStyle: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),
+    enabledBorder:OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white,width: 2),
+    ),
   );
+
 }
 
-//Background Image set function
-BackgrounImage(context){
+
+//Screen background image
+screenBackground(context){
   return SvgPicture.asset(
     'assets/images/screen-back.svg',
     alignment: Alignment.center,
-    width: MediaQuery.of(context).size.width,//width sob screen  a full hobe
-    height: MediaQuery.of(context).size.height,//height sob screen a full hobe
-    fit: BoxFit.cover,//ata use korle sob screen er sathe fit hobe
+    width:MediaQuery.of(context).size.width ,
+    height: MediaQuery.of(context).size.height,
+    fit: BoxFit.cover,
   );
-
 }
 
-DecoratedBox AppDropdownStyle(child){
+//drop down menut style korar jonno decoratedBox widget use koreci
+DecoratedBox dropDownStyle(child){
   return DecoratedBox(
       decoration:BoxDecoration(
-        color: WhiteColor,
-        border: Border.all(color: WhiteColor,width: 1),
-        borderRadius: BorderRadius.all(Radius.circular(5))
-        
-      ),//box decoration
+        color: Colors.greenAccent,
+        border: Border.all(color: Colors.white,width: 1),
+        borderRadius: BorderRadius.circular(5),
+
+      ),
     child: Padding(
-      padding: EdgeInsets.only(left: 30,right: 30),
+      padding: EdgeInsets.only(left: 30 ,right: 30),
       child: child,
-    ),//padding
+    ),
 
-
-  );//decorationbox
+  );
 
 }
 
 //submit button style
-
-ButtonStyle SubmitButtonStyle(){
+ButtonStyle submitButtonStyle(){
   return ElevatedButton.styleFrom(
-
     padding: EdgeInsets.all(0),
-    backgroundColor: Colors.blue,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)
-
-    )
-
+    backgroundColor: Colors.transparent,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
   );
 }
 
-
-//button er vitor er text style
-Ink ButtonTextStyle(ButtonText){//ink style er jonno use hoi
+//akhane ink use kore decoration kora jai
+//akhane button er width color text ,text style er jonno use koreci
+Ink successButtonStyle(buttonText){//button text use koreci button name er jonno
   return Ink(
     decoration: BoxDecoration(
-      color: GreenColor,
+      color: Colors.green,
       borderRadius: BorderRadius.circular(6),
 
+
+
     ),
-    child: Container(
-      height: 45,
+    child: Container(//container use koreci jeno button er width full screen nei
+      height: 50,
       alignment: Alignment.center,
-      child:Text(ButtonText,
-       style: TextStyle(
-         fontSize: 20,
-         fontWeight: FontWeight.w400,
-       ),
-      ) ,
+      child: Text(
+        buttonText,
+        style:TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w400,
+
+        ) ,),
+
+
     ),
 
   );
 }
 
+//value sob submit na hoile ay function call hoye error message dibe
+errorToast(msg){
+  Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+      fontSize: 16.0
+  );
 
 
+}
+
+//value sob submit  hoile ay function call hoye success message dibe
+
+successToast(msg){
+  Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+      fontSize: 16.0
+  );
+
+}
