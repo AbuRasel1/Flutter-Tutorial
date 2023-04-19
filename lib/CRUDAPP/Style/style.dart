@@ -119,3 +119,12 @@ successToast(msg){
   );
 
 }
+
+//Grid view style productgridViewScreen page er
+SliverGridDelegateWithFixedCrossAxisCount productGridViewStyle(){
+  return SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 2,//mane 2ta column hobe
+    crossAxisSpacing: 2,//sob gular vitor 2 space thakbe
+    mainAxisExtent: 250,//er height width 250 hobe
+  );
+}
