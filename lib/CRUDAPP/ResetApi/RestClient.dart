@@ -66,3 +66,26 @@ Future<bool> productDeleteRequest (id)async{
 
 
 }
+
+
+//product update korar api call
+Future<bool> productUpdateRequest(formValues,id)async{
+  var url=Uri.parse("https://crud.teamrabbil.com/api/v1/UpdateProduct/"+id);
+  var postBody=json.encode(formValues);
+  var postHeader={"Content-Type":"application/json"};
+  var response=await http.post(url, headers: postHeader,body: postBody );
+
+  var resultCode=response.statusCode;
+  var resultBody=json.decode(response.body);
+  if(resultCode==200 && resultBody['status']=='success'){
+    successToast("Request successfull");
+
+    return true;
+
+  }
+  else{
+    errorToast("Request Failed ! Try again");
+    return false;
+  }
+
+}

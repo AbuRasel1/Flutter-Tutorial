@@ -1,3 +1,5 @@
+import 'package:app1/CRUDAPP/Screen/productcreatescreen.dart';
+import 'package:app1/CRUDAPP/Screen/productupdatescreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -61,6 +63,11 @@ class _productgridViewScreenState extends State<productgridViewScreen> {
 
   }
 
+  //product update page a jabe update button a click korle
+  goToUpdatePage(context,productItem){
+    Navigator.push(context, MaterialPageRoute(builder: (builder)=>productupdatescreen(productItem)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,8 +110,12 @@ class _productgridViewScreenState extends State<productgridViewScreen> {
                                             mainAxisAlignment: MainAxisAlignment.end,
 
                                             children: [
-                                              OutlinedButton(onPressed: (){}, child: Icon((CupertinoIcons.ellipsis_vertical_circle),size: 20,color:Colors.greenAccent,)),
+                                              //update button
+                                              OutlinedButton(onPressed: (){
+                                                goToUpdatePage(context,productList[index]);
+                                              }, child: Icon((CupertinoIcons.ellipsis_vertical_circle),size: 20,color:Colors.greenAccent,)),
                                               SizedBox(width: 3,),
+                                              //delete button
                                               OutlinedButton(onPressed: (){
                                                 deleteItem(productList[index]['_id']);
                                               }, child:Icon(Icons.delete,size: 20,color:Colors.redAccent),)
@@ -123,6 +134,10 @@ class _productgridViewScreenState extends State<productgridViewScreen> {
 
           ],
 
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (builder)=>productCreateScreen()));},
+        child: Icon(Icons.add),
       ),
 
     );
