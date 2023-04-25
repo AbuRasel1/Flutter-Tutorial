@@ -1,3 +1,4 @@
+import 'package:app1/CRUDAPP/Crud%20Practise/screen/update.dart';
 import 'package:app1/CRUDAPP/Screen/productcreatescreen.dart';
 import 'package:app1/CRUDAPP/Screen/productupdatescreen.dart';
 import 'package:flutter/cupertino.dart';
@@ -67,6 +68,9 @@ class _productgridViewScreenState extends State<productgridViewScreen> {
   goToUpdatePage(context,productItem){
     Navigator.push(context, MaterialPageRoute(builder: (builder)=>productupdatescreen(productItem)));
   }
+  goToUpdatePage1(context,productItem){
+    Navigator.push(context, MaterialPageRoute(builder: (builder)=>update(productItem)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +99,7 @@ class _productgridViewScreenState extends State<productgridViewScreen> {
 
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
-                                    Expanded(child: Image.network(productList[index]['Img'],fit: BoxFit.fill,)),
-                                    Container(
+                                    Expanded(child: Image.network(productList[index]['Img'],fit: BoxFit.fill,)),                                    Container(
                                       padding: EdgeInsets.fromLTRB(5,5,5,8),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +115,8 @@ class _productgridViewScreenState extends State<productgridViewScreen> {
                                             children: [
                                               //update button
                                               OutlinedButton(onPressed: (){
-                                                goToUpdatePage(context,productList[index]);
+                                                goToUpdatePage1(context,productList[index]);
+
                                               }, child: Icon((CupertinoIcons.ellipsis_vertical_circle),size: 20,color:Colors.greenAccent,)),
                                               SizedBox(width: 3,),
                                               //delete button
